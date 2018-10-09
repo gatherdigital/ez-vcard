@@ -18,7 +18,6 @@ import java.util.Set;
 
 import javax.xml.transform.TransformerException;
 
-import ezvcard.io.html.HCardPage;
 import ezvcard.io.json.JCardWriter;
 import ezvcard.io.text.VCardWriter;
 import ezvcard.io.xml.XCardWriter;
@@ -305,73 +304,6 @@ public class VCard implements Iterable<VCardProperty> {
 	 */
 	public void writeXml(Writer writer) throws TransformerException {
 		Ezvcard.writeXml(this).indent(2).go(writer);
-	}
-
-	/**
-	 * <p>
-	 * Marshals this vCard to a basic HTML page (hCard).
-	 * </p>
-	 * <p>
-	 * Use the {@link HCardPage} class for more control over the marshalling
-	 * process and to write multiple vCards to the same stream.
-	 * </p>
-	 * @return the HTML page
-	 * @see HCardPage
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public String writeHtml() {
-		return Ezvcard.writeHtml(this).go();
-	}
-
-	/**
-	 * <p>
-	 * Marshals this vCard to a basic HTML page (hCard).
-	 * </p>
-	 * <p>
-	 * Use the {@link HCardPage} class for more control over the marshalling
-	 * process and to write multiple vCards to the same stream.
-	 * </p>
-	 * @param file the file to write to
-	 * @throws IOException if there's a problem writing to the file
-	 * @see HCardPage
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public void writeHtml(File file) throws IOException {
-		Ezvcard.writeHtml(this).go(file);
-	}
-
-	/**
-	 * <p>
-	 * Marshals this vCard to a basic HTML page (hCard).
-	 * </p>
-	 * <p>
-	 * Use the {@link HCardPage} class for more control over the marshalling
-	 * process and to write multiple vCards to the same stream.
-	 * </p>
-	 * @param out the output stream to write to
-	 * @throws IOException if there's a problem writing to the output stream
-	 * @see HCardPage
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public void writeHtml(OutputStream out) throws IOException {
-		Ezvcard.writeHtml(this).go(out);
-	}
-
-	/**
-	 * <p>
-	 * Marshals this vCard to a basic HTML page (hCard).
-	 * </p>
-	 * <p>
-	 * Use the {@link HCardPage} class for more control over the marshalling
-	 * process and to write multiple vCards to the same stream.
-	 * </p>
-	 * @param writer the writer to write to
-	 * @throws IOException if there's a problem writing to the writer
-	 * @see HCardPage
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public void writeHtml(Writer writer) throws IOException {
-		Ezvcard.writeHtml(this).go(writer);
 	}
 
 	/**

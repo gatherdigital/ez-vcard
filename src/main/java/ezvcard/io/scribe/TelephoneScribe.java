@@ -8,7 +8,6 @@ import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -136,23 +135,6 @@ public class TelephoneScribe extends VCardPropertyScribe<Telephone> {
 		}
 
 		throw missingXmlElements(VCardDataType.TEXT, VCardDataType.URI);
-	}
-
-	@Override
-	protected Telephone _parseHtml(HCardElement element, ParseContext context) {
-		Telephone property;
-		String href = element.attr("href");
-		try {
-			property = new Telephone(TelUri.parse(href));
-		} catch (IllegalArgumentException e) {
-			//not a tel URI
-			property = new Telephone(element.value());
-		}
-
-		List<String> types = element.types();
-		property.getParameters().putAll(VCardParameters.TYPE, types);
-
-		return property;
 	}
 
 	@Override

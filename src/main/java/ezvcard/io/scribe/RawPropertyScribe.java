@@ -7,7 +7,6 @@ import com.github.mangstadt.vinnie.io.VObjectPropertyValues;
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.json.JsonValue;
 import ezvcard.io.text.WriteContext;
@@ -102,13 +101,6 @@ public class RawPropertyScribe extends VCardPropertyScribe<RawProperty> {
 		RawProperty property = new RawProperty(propertyName, valueStr);
 		property.setDataType(dataType);
 		return property;
-	}
-
-	@Override
-	protected RawProperty _parseHtml(HCardElement element, ParseContext context) {
-		String value = element.value();
-
-		return new RawProperty(propertyName, value);
 	}
 
 	private static String jcardValueToString(JCardValue value) {

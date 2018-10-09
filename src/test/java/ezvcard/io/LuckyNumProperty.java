@@ -7,7 +7,6 @@ import org.w3c.dom.NodeList;
 
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.scribe.VCardPropertyScribe;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -93,11 +92,6 @@ public class LuckyNumProperty extends VCardProperty {
 			int luckyNum = Integer.parseInt(num.getTextContent());
 
 			return new LuckyNumProperty(luckyNum);
-		}
-
-		@Override
-		protected LuckyNumProperty _parseHtml(HCardElement element, ParseContext context) {
-			return new LuckyNumProperty(Integer.parseInt(element.value()));
 		}
 	}
 }

@@ -2,7 +2,6 @@ package ezvcard.io.scribe;
 
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.ImageProperty;
 import ezvcard.util.DataUri;
@@ -55,29 +54,5 @@ public abstract class ImagePropertyScribe<T extends ImageProperty> extends Binar
 	@Override
 	protected ImageType _mediaTypeFromFileExtension(String extension) {
 		return ImageType.find(null, null, extension);
-	}
-
-	@Override
-	protected T _parseHtml(HCardElement element, ParseContext context) {
-		String elementName = element.tagName();
-		if (!"img".equals(elementName)) {
-			return super._parseHtml(element, context);
-		}
-
-		String src = element.absUrl("src");
-		if (src.length() == 0) {
-			throw new CannotParseException(13);
-		}
-
-		try {
-			DataUri uri = DataUri.parse(src);
-			ImageType mediaType = _mediaTypeFromMediaTypeParameter(uri.getContentType());
-			return _newInstance(uri.getData(), mediaType);
-		} catch (IllegalArgumentException e) {
-			//not a data URI
-			String extension = getFileExtension(src);
-			ImageType mediaType = (extension == null) ? null : _mediaTypeFromFileExtension(extension);
-			return _newInstance(src, mediaType);
-		}
 	}
 }

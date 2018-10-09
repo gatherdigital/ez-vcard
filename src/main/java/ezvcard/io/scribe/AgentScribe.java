@@ -11,7 +11,6 @@ import ezvcard.VCardVersion;
 import ezvcard.io.EmbeddedVCardException;
 import ezvcard.io.ParseContext;
 import ezvcard.io.SkipMeException;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.text.WriteContext;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.Agent;
@@ -89,24 +88,6 @@ public class AgentScribe extends VCardPropertyScribe<Agent> {
 		}
 
 		property.setUrl(VObjectPropertyValues.unescape(value));
-		return property;
-	}
-
-	@Override
-	protected Agent _parseHtml(HCardElement element, ParseContext context) {
-		Agent property = new Agent();
-
-		Set<String> classes = element.classNames();
-		if (classes.contains("vcard")) {
-			throw new EmbeddedVCardException(new Injector(property));
-		}
-
-		String url = element.absUrl("href");
-		if (url.length() == 0) {
-			url = element.value();
-		}
-		property.setUrl(url);
-
 		return property;
 	}
 

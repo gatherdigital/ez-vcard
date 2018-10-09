@@ -121,32 +121,4 @@ public class AgentScribeTest {
 			assertEquals(vcard, property.getVCard());
 		}
 	}
-
-	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<a href=\"" + url + "\"></a>").run(withUrl);
-		sensei.assertParseHtml("<div>" + url + "</div>").run(withUrl);
-
-		try {
-			//@formatter:off
-			sensei.assertParseHtml(
-			"<div class=\"agent vcard\">" +
-				"<span class=\"fn\">Jane Doe</span>" +
-				"<div class=\"agent vcard\">" +
-					"<span class=\"fn\">Joseph Doe</span>" +
-				"</div>" +
-			"</div>").run();
-			//@formatter:on
-
-			fail();
-		} catch (EmbeddedVCardException e) {
-			Agent property = (Agent) e.getProperty();
-			assertNull(property.getUrl());
-			assertNull(property.getVCard());
-
-			e.injectVCard(vcard);
-			assertNull(property.getUrl());
-			assertEquals(vcard, property.getVCard());
-		}
-	}
 }

@@ -106,97 +106,9 @@ public class ImppScribeTest {
 	}
 
 	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<a href=\"aim:goim?screenname=johndoe\">IM me</a>").run(withValue);
-		sensei.assertParseHtml("<div>aim:goim?screenname=johndoe</div>").run(withValue);
-		sensei.assertParseHtml("<div>johndoe</div>").cannotParse(14);
-	}
-
-	@Test
 	public void parseJson() {
 		sensei.assertParseJson(uri).run(withValue);
 		sensei.assertParseJson(badUri).cannotParse(15);
 		sensei.assertParseJson("").run(empty);
-	}
-
-	@Test
-	public void parseHtmlLink() {
-		//@formatter:off
-		assertParseHtmlLink("aim:theuser",
-			"aim:goim?screenname=theuser",
-			"aim:goim?screenname=theuser&message=hello",
-			"aim:addbuddy?screenname=theuser"
-		);
-		
-		assertParseHtmlLink("ymsgr:theuser",
-			"ymsgr:sendim?theuser",
-			"ymsgr:addfriend?theuser",
-			"ymsgr:sendfile?theuser",
-			"ymsgr:call?theuser"
-		);
-		
-		assertParseHtmlLink("skype:theuser",
-			"skype:theuser",
-			"skype:theuser?call",
-			"skype:theuser?call&topic=theTopic"
-		);
-		
-		assertParseHtmlLink("msnim:theuser",
-			"msnim:chat?contact=theuser",
-			"msnim:add?contact=theuser",
-			"msnim:voice?contact=theuser",
-			"msnim:video?contact=theuser"
-		);
-		
-		assertParseHtmlLink("xmpp:theuser",
-			"xmpp:theuser",
-			"xmpp:theuser?message"
-		);
-		
-		assertParseHtmlLink("icq:123456789",
-			"icq:message?uin=123456789"
-		);
-		
-		assertParseHtmlLink("sip:username:password@host:port",
-			"sip:username:password@host:port"
-		);
-		
-		assertParseHtmlLink("irc://foobar.org/theuser,isnick",
-			"irc://foobar.org/theuser,isnick"
-		);
-		
-		assertParseHtmlLink(null,
-			"foo:theuser",
-			"theuser",
-			"aim:invalid?screenname=theuser"
-		);
-		//@formatter:on
-	}
-
-	private void assertParseHtmlLink(String expectedUri, String... linksToTest) {
-		URI expected = (expectedUri == null) ? null : URI.create(expectedUri);
-		for (String link : linksToTest) {
-			URI actual = scribe.parseHtmlLink(link);
-			assertEquals(expected, actual);
-		}
-	}
-
-	@Test
-	public void writeHtmlLink() {
-		assertWriteHtmlLink(new Impp((String) null), null);
-		assertWriteHtmlLink(Impp.aim("theuser"), "aim:goim?screenname=theuser");
-		assertWriteHtmlLink(Impp.skype("theuser"), "skype:theuser");
-		assertWriteHtmlLink(Impp.icq("123456789"), "icq:message?uin=123456789");
-		assertWriteHtmlLink(Impp.msn("theuser"), "msnim:chat?contact=theuser");
-		assertWriteHtmlLink(Impp.yahoo("theuser"), "ymsgr:sendim?theuser");
-		assertWriteHtmlLink(Impp.irc("theuser"), "irc:theuser");
-		assertWriteHtmlLink(Impp.sip("theuser"), "sip:theuser");
-		assertWriteHtmlLink(Impp.xmpp("theuser"), "xmpp:theuser?message");
-		assertWriteHtmlLink(new Impp("foo", "bar"), "foo:bar");
-	}
-
-	private void assertWriteHtmlLink(Impp property, String expectedUri) {
-		String actualUri = scribe.writeHtmlLink(property);
-		assertEquals(expectedUri, actualUri);
 	}
 }

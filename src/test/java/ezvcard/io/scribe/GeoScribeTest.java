@@ -127,56 +127,6 @@ public class GeoScribeTest {
 	}
 
 	@Test
-	public void parseHtml() {
-		//@formatter:off
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"latitude\">-12.34</span>" +
-			"<span class=\"longitude\">56.78</span>" +
-		"</div>"		
-		).run(withBoth);
-		
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"latitude\">invalid</span>" +
-			"<span class=\"longitude\">56.78</span>" +
-		"</div>"		
-		).cannotParse(8);
-		
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"latitude\">-12.34</span>" +
-			"<span class=\"longitude\">invalid</span>" +
-		"</div>"		
-		).cannotParse(10);
-		
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"latitude\">invalid</span>" +
-			"<span class=\"longitude\">invalid</span>" +
-		"</div>"		
-		).cannotParse(8);
-		
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"latitude\">-12.34</span>" +
-		"</div>"		
-		).cannotParse(9);
-		
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"longitude\">56.78</span>" +
-		"</div>"		
-		).cannotParse(7);
-		
-		sensei.assertParseHtml(
-		"<div>" +
-		"</div>"		
-		).cannotParse(7);
-		//@formatter:on
-	}
-
-	@Test
 	public void parseJson() {
 		sensei.assertParseJson("geo:-12.34,56.78").run(withBoth);
 		sensei.assertParseJson("geo:invalid,56.78").cannotParse(12);

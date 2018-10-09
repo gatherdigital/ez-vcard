@@ -8,7 +8,6 @@ import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -51,10 +50,6 @@ import ezvcard.util.UtcOffset;
  * 
  * vCard 2.1:
  * Parse as UTC offset.  If invalid, throw CannotParseException.
- * 
- * vCard 3.0, hCard:
- * VALUE=text:			Treat as text
- * No VALUE param:		Parse as UTC offset.  If invalid, add warning and treat as text.
  * 
  * vCard 4.0, jCard:
  * VALUE=text:			Treat as text
@@ -224,11 +219,6 @@ public class TimezoneScribe extends VCardPropertyScribe<Timezone> {
 		}
 
 		throw missingXmlElements(VCardDataType.TEXT, VCardDataType.UTC_OFFSET);
-	}
-
-	@Override
-	protected Timezone _parseHtml(HCardElement element, ParseContext context) {
-		return parse(element.value(), null, context);
 	}
 
 	@Override

@@ -172,27 +172,6 @@ public class TelephoneScribeTest {
 	}
 
 	@Test
-	public void parseHtml() {
-		//@formatter:off
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"type\">home</span>" +
-			"<span class=\"type\">cell</span>" +
-			"<span class=\"type\">foo</span>" +
-			"<span class=\"value\">" + text + "</span>" +
-		"</div>").run(new Check<Telephone>(){
-			public void check(Telephone property) {
-				assertEquals(text, property.getText());
-				assertEquals(Arrays.asList(TelephoneType.HOME, TelephoneType.CELL, TelephoneType.get("foo")), property.getTypes());
-			}
-		});
-
-		sensei.assertParseHtml("<a href=\"" + uri + "\">Call me</a>").run(withUri);
-		sensei.assertParseHtml("<a href=\"foo\">" + text + "</a>").run(withText);
-		//@formatter:on
-	}
-
-	@Test
 	public void parseJson() {
 		sensei.assertParseJson(text).dataType(VCardDataType.TEXT).run(withText);
 		sensei.assertParseJson(text).dataType(VCardDataType.URI).warnings(18).run(withText);

@@ -10,7 +10,6 @@ import com.github.mangstadt.vinnie.io.VObjectPropertyValues.StructuredValueItera
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -152,19 +151,6 @@ public class StructuredNameScribe extends VCardPropertyScribe<StructuredName> {
 
 	private static String s(String value) {
 		return (value == null || value.length() == 0) ? null : value;
-	}
-
-	@Override
-	protected StructuredName _parseHtml(HCardElement element, ParseContext context) {
-		StructuredName property = new StructuredName();
-
-		property.setFamily(s(element.firstValue("family-name")));
-		property.setGiven(s(element.firstValue("given-name")));
-		property.getAdditionalNames().addAll(element.allValues("additional-name"));
-		property.getPrefixes().addAll(element.allValues("honorific-prefix"));
-		property.getSuffixes().addAll(element.allValues("honorific-suffix"));
-
-		return property;
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -76,22 +75,6 @@ public class RevisionScribe extends VCardPropertyScribe<Revision> {
 		}
 
 		throw missingXmlElements(VCardDataType.TIMESTAMP);
-	}
-
-	@Override
-	protected Revision _parseHtml(HCardElement element, ParseContext context) {
-		String value = null;
-		if ("time".equals(element.tagName())) {
-			String datetime = element.attr("datetime");
-			if (datetime.length() > 0) {
-				value = datetime;
-			}
-		}
-		if (value == null) {
-			value = element.value();
-		}
-
-		return parse(value);
 	}
 
 	@Override

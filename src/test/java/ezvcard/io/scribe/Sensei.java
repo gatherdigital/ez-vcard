@@ -21,12 +21,10 @@ import ezvcard.VCardVersion;
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
 import ezvcard.io.SkipMeException;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.VCardProperty;
-import ezvcard.util.HtmlUtils;
 import ezvcard.util.XmlUtils;
 
 /*
@@ -95,15 +93,6 @@ public class Sensei<T extends VCardProperty> {
 	 */
 	public ParseXmlTest assertParseXml(String innerXml) {
 		return new ParseXmlTest(innerXml);
-	}
-
-	/**
-	 * Asserts the {@link VCardPropertyScribe#parseHtml} method.
-	 * @param html the HTML element to parse
-	 * @return the tester object
-	 */
-	public ParseHtmlTest assertParseHtml(String html) {
-		return new ParseHtmlTest(html);
 	}
 
 	/**
@@ -588,61 +577,6 @@ public class Sensei<T extends VCardProperty> {
 				Document document = createXCardElement(innerXml);
 				Element element = document.getDocumentElement();
 				T property = scribe.parseXml(element, parameters, context);
-
-				if (cannotParseExceptionCode == null || cannotParseExceptionCode >= 0) {
-					fail("Expected a CannotParseException with code <" + cannotParseExceptionCode + "> to be thrown.");
-				}
-
-				if (check != null) {
-					check.check(property);
-				}
-
-				assertParseWarnings(context.getWarnings(), parseWarningCodes);
-			} catch (CannotParseException e) {
-				if (cannotParseExceptionCode == -1) {
-					/*
-					 * Throw the exception to fail the test, since it was not
-					 * expected to be thrown.
-					 */
-					throw e;
-				}
-
-				assertEquals("CannotParseException's parse warning code was wrong.", cannotParseExceptionCode, e.getCode());
-			}
-		}
-	}
-
-	/**
-	 * Tester class used for testing the {@link VCardPropertyScribe#parseHtml}
-	 * method.
-	 */
-	public class ParseHtmlTest extends ParseTest<ParseHtmlTest> {
-		private final String html;
-
-		/**
-		 * @param html the HTML of the hCard property element
-		 */
-		public ParseHtmlTest(String html) {
-			this.html = html;
-		}
-
-		@Override
-		public ParseHtmlTest param(String name, String value) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public ParseHtmlTest params(VCardParameters parameters) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		protected void run(Check<T> check, Integer cannotParseExceptionCode) {
-			try {
-				ParseContext context = new ParseContext();
-				context.setVersion(VCardVersion.V3_0);
-				org.jsoup.nodes.Element element = HtmlUtils.toElement(html);
-				T property = scribe.parseHtml(new HCardElement(element), context);
 
 				if (cannotParseExceptionCode == null || cannotParseExceptionCode >= 0) {
 					fail("Expected a CannotParseException with code <" + cannotParseExceptionCode + "> to be thrown.");

@@ -11,9 +11,6 @@ import java.util.Properties;
 
 import org.w3c.dom.Document;
 
-import ezvcard.io.chain.ChainingHtmlParser;
-import ezvcard.io.chain.ChainingHtmlStringParser;
-import ezvcard.io.chain.ChainingHtmlWriter;
 import ezvcard.io.chain.ChainingJsonParser;
 import ezvcard.io.chain.ChainingJsonStringParser;
 import ezvcard.io.chain.ChainingJsonWriter;
@@ -23,8 +20,6 @@ import ezvcard.io.chain.ChainingTextWriter;
 import ezvcard.io.chain.ChainingXmlMemoryParser;
 import ezvcard.io.chain.ChainingXmlParser;
 import ezvcard.io.chain.ChainingXmlWriter;
-import ezvcard.io.html.HCardPage;
-import ezvcard.io.html.HCardParser;
 import ezvcard.io.json.JCardReader;
 import ezvcard.io.json.JCardWriter;
 import ezvcard.io.text.VCardReader;
@@ -84,11 +79,6 @@ import ezvcard.util.IOUtils;
  * <th>XML</th>
  * <td>{@link XCardDocument}, {@link XCardReader}</td>
  * <td>{@link XCardDocument}, {@link XCardWriter}</td>
- * </tr>
- * <tr>
- * <th>HTML</th>
- * <td>{@link HCardParser}</td>
- * <td>{@link HCardPage}</td>
  * </tr>
  * <tr>
  * <th>JSON</th>
@@ -309,86 +299,6 @@ public final class Ezvcard {
 
 	/**
 	 * <p>
-	 * Parses HTML-encoded vCards (hCard).
-	 * </p>
-	 * <p>
-	 * Use {@link HCardParser} for more control over the parsing.
-	 * </p>
-	 * @param html the HTML page
-	 * @return chainer object for completing the parse operation
-	 * @see HCardParser
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public static ChainingHtmlStringParser parseHtml(String html) {
-		return new ChainingHtmlStringParser(html);
-	}
-
-	/**
-	 * <p>
-	 * Parses HTML-encoded vCards (hCard).
-	 * </p>
-	 * <p>
-	 * Use {@link HCardParser} for more control over the parsing.
-	 * </p>
-	 * @param file the HTML file
-	 * @return chainer object for completing the parse operation
-	 * @see HCardParser
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public static ChainingHtmlParser<ChainingHtmlParser<?>> parseHtml(File file) {
-		return new ChainingHtmlParser<ChainingHtmlParser<?>>(file);
-	}
-
-	/**
-	 * <p>
-	 * Parses HTML-encoded vCards (hCard).
-	 * </p>
-	 * <p>
-	 * Use {@link HCardParser} for more control over the parsing.
-	 * </p>
-	 * @param in the input stream to the HTML page
-	 * @return chainer object for completing the parse operation
-	 * @see HCardParser
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public static ChainingHtmlParser<ChainingHtmlParser<?>> parseHtml(InputStream in) {
-		return new ChainingHtmlParser<ChainingHtmlParser<?>>(in);
-	}
-
-	/**
-	 * <p>
-	 * Parses HTML-encoded vCards (hCard).
-	 * </p>
-	 * <p>
-	 * Use {@link HCardParser} for more control over the parsing.
-	 * </p>
-	 * @param reader the reader to the HTML page
-	 * @return chainer object for completing the parse operation
-	 * @see HCardParser
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public static ChainingHtmlParser<ChainingHtmlParser<?>> parseHtml(Reader reader) {
-		return new ChainingHtmlParser<ChainingHtmlParser<?>>(reader);
-	}
-
-	/**
-	 * <p>
-	 * Parses HTML-encoded vCards (hCard).
-	 * </p>
-	 * <p>
-	 * Use {@link HCardParser} for more control over the parsing.
-	 * </p>
-	 * @param url the URL of the webpage
-	 * @return chainer object for completing the parse operation
-	 * @see HCardParser
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public static ChainingHtmlParser<ChainingHtmlParser<?>> parseHtml(URL url) {
-		return new ChainingHtmlParser<ChainingHtmlParser<?>>(url);
-	}
-
-	/**
-	 * <p>
 	 * Parses JSON-encoded vCards (jCard).
 	 * </p>
 	 * <p>
@@ -523,38 +433,6 @@ public final class Ezvcard {
 	 */
 	public static ChainingXmlWriter writeXml(Collection<VCard> vcards) {
 		return new ChainingXmlWriter(vcards);
-	}
-
-	/**
-	 * <p>
-	 * Marshals one or more vCards their HTML representation (hCard).
-	 * </p>
-	 * <p>
-	 * Use {@link HCardPage} for more control over how the vCards are written.
-	 * </p>
-	 * @param vcards the vCard(s) to marshal
-	 * @return chainer object for completing the write operation
-	 * @see HCardPage
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public static ChainingHtmlWriter writeHtml(VCard... vcards) {
-		return writeHtml(Arrays.asList(vcards));
-	}
-
-	/**
-	 * <p>
-	 * Marshals one or more vCards their HTML representation (hCard).
-	 * </p>
-	 * <p>
-	 * Use {@link HCardPage} for more control over how the vCards are written.
-	 * </p>
-	 * @param vcards the vCard(s) to marshal
-	 * @return chainer object for completing the write operation
-	 * @see HCardPage
-	 * @see <a href="http://microformats.org/wiki/hcard">hCard 1.0</a>
-	 */
-	public static ChainingHtmlWriter writeHtml(Collection<VCard> vcards) {
-		return new ChainingHtmlWriter(vcards);
 	}
 
 	/**

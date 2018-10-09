@@ -71,11 +71,6 @@
 			<version>1.11.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.28</version>
-		</dependency>
-		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 			<version>2.9.6</version>
@@ -167,7 +162,6 @@
 						<Import-Package>
 							com.fasterxml.jackson.*;resolution:=optional,
 							org.jsoup.*;resolution:=optional,
-							freemarker.*;resolution:=optional,
 							*
 						</Import-Package>
 					</instructions>
@@ -232,7 +226,6 @@
 					<linksource>true</linksource>
 					<links>
 						<link>https://mangstadt.github.io/vinnie/javadocs/latest/</link>
-						<link>http://freemarker.incubator.apache.org/docs/api</link>
 						<link>http://jsoup.org/apidocs/</link>
 						<link>http://fasterxml.github.io/jackson-core/javadoc/2.6/</link>
 					</links>

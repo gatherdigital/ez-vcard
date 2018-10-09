@@ -7,7 +7,6 @@ import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -164,38 +163,6 @@ public abstract class BinaryPropertyScribe<T extends BinaryProperty<U>, U extend
 		}
 
 		throw missingXmlElements(VCardDataType.URI);
-	}
-
-	@Override
-	protected T _parseHtml(HCardElement element, ParseContext context) {
-		String elementName = element.tagName();
-		if (!"object".equals(elementName)) {
-			throw new CannotParseException(1, elementName);
-		}
-
-		String data = element.absUrl("data");
-		if (data.length() == 0) {
-			throw new CannotParseException(2);
-		}
-
-		try {
-			DataUri uri = DataUri.parse(data);
-			U mediaType = _mediaTypeFromMediaTypeParameter(uri.getContentType());
-
-			return _newInstance(uri.getData(), mediaType);
-		} catch (IllegalArgumentException e) {
-			//not a data URI
-			U mediaType = null;
-			String type = element.attr("type");
-			if (type.length() > 0) {
-				mediaType = _mediaTypeFromMediaTypeParameter(type);
-			} else {
-				String extension = getFileExtension(data);
-				mediaType = (extension == null) ? null : _mediaTypeFromFileExtension(extension);
-			}
-
-			return _newInstance(data, mediaType);
-		}
 	}
 
 	@Override

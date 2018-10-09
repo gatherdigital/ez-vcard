@@ -2,7 +2,6 @@ package ezvcard.io;
 
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.scribe.VCardPropertyScribe;
 import ezvcard.io.text.WriteContext;
@@ -77,11 +76,6 @@ public class MyFormattedNameProperty extends VCardProperty {
 		@Override
 		protected MyFormattedNameProperty _parseXml(XCardElement element, VCardParameters parameters, ParseContext context) {
 			return new MyFormattedNameProperty(element.first("name").toUpperCase());
-		}
-
-		@Override
-		protected MyFormattedNameProperty _parseHtml(HCardElement element, ParseContext context) {
-			return new MyFormattedNameProperty(element.value().toUpperCase());
 		}
 
 		@Override

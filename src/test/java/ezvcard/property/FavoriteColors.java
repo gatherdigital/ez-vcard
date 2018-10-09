@@ -11,7 +11,6 @@ import ezvcard.VCardVersion;
 import ezvcard.ValidationWarning;
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.scribe.VCardPropertyScribe;
 import ezvcard.io.text.WriteContext;
@@ -147,20 +146,6 @@ public class FavoriteColors extends VCardProperty {
 			for (String color : colors) {
 				property.addColor(color);
 			}
-			return property;
-		}
-
-		//optional
-		//parses the property value from an HTML page (hCard)
-		@Override
-		protected FavoriteColors _parseHtml(HCardElement element, ParseContext context) {
-			FavoriteColors property = new FavoriteColors();
-
-			String lang = element.attr("lang");
-			property.setLanguage((lang.length() == 0) ? null : lang);
-
-			property.getColors().addAll(element.allValues("color")); //gets the hCard values of all descendant elements that have a CSS class named "color"
-
 			return property;
 		}
 

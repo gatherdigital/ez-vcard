@@ -5,7 +5,6 @@ import java.util.List;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.Email;
 
@@ -51,22 +50,6 @@ public class EmailScribe extends StringPropertyScribe<Email> {
 	@Override
 	protected Email _parseValue(String value) {
 		return new Email(value);
-	}
-
-	@Override
-	protected Email _parseHtml(HCardElement element, ParseContext context) {
-		String href = element.attr("href");
-		String email = extractEmailFromHrefAttribute(href);
-		if (email == null) {
-			email = element.value();
-		}
-
-		Email property = new Email(email);
-
-		List<String> types = element.types();
-		property.getParameters().putAll(VCardParameters.TYPE, types);
-
-		return property;
 	}
 
 	private static String extractEmailFromHrefAttribute(String value) {

@@ -201,14 +201,6 @@ public class DateOrTimePropertyScribeTest {
 		sensei.assertParseJson(text).dataType(TEXT).run(withText);
 	}
 
-	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<time datetime=\"" + dateExtendedStr + "\">June 5, 1980</time>").run(withDate);
-		sensei.assertParseHtml("<time>" + dateExtendedStr + "</time>").run(withDate);
-		sensei.assertParseHtml("<div>" + dateExtendedStr + "</div>").run(withDate);
-		sensei.assertParseHtml("<time>June 5, 1980</time>").cannotParse(5);
-	}
-
 	private static class DateOrTimeScribeImpl extends DateOrTimePropertyScribe<DateOrTimePropertyImpl> {
 		public DateOrTimeScribeImpl() {
 			super(DateOrTimePropertyImpl.class, "DATETIME");

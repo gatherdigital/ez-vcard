@@ -333,16 +333,6 @@ public class VCardPropertyScribeTest {
 	}
 
 	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<div>value<del>ignore</del>value</div>").warnings((Integer) null).run(new Check<TestProperty>() {
-			public void check(TestProperty property) {
-				assertEquals("valuevalue", property.value);
-				assertNull(property.parsedDataType);
-			}
-		});
-	}
-
-	@Test
 	public void writeJson() {
 		TestProperty property = new TestProperty("value");
 		sensei.assertWriteJson(property).run("value");

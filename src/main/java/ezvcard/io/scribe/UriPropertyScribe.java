@@ -2,7 +2,6 @@ package ezvcard.io.scribe;
 
 import ezvcard.VCardDataType;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.property.TextProperty;
 
 /*
@@ -38,14 +37,5 @@ import ezvcard.property.TextProperty;
 public abstract class UriPropertyScribe<T extends TextProperty> extends StringPropertyScribe<T> {
 	public UriPropertyScribe(Class<T> clazz, String propertyName) {
 		super(clazz, propertyName, VCardDataType.URI);
-	}
-
-	@Override
-	protected T _parseHtml(HCardElement element, ParseContext context) {
-		String href = element.absUrl("href");
-		if (href.length() == 0) {
-			return super._parseHtml(element, context);
-		}
-		return _parseValue(href);
 	}
 }

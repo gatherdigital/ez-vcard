@@ -93,18 +93,6 @@ public class RevisionScribeTest {
 	}
 
 	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<time datetime=\"" + datetimeStrExt + "\">June 5, 1980</time>").run(withValue);
-		sensei.assertParseHtml("<time datetime=\"invalid\">June 5, 1980</time>").cannotParse(5);
-
-		sensei.assertParseHtml("<time>" + datetimeStrExt + "</time>").run(withValue);
-		sensei.assertParseHtml("<time>invalid</time>").cannotParse(5);
-
-		sensei.assertParseHtml("<div>" + datetimeStrExt + "</div>").run(withValue);
-		sensei.assertParseHtml("<div>invalid</div>").cannotParse(5);
-	}
-
-	@Test
 	public void parseJson() {
 		sensei.assertParseJson(datetimeStrExt).run(withValue);
 		sensei.assertParseJson("invalid").cannotParse(5);

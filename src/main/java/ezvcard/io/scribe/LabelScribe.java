@@ -3,7 +3,6 @@ package ezvcard.io.scribe;
 import java.util.List;
 
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.parameter.VCardParameters;
 import ezvcard.property.Label;
 
@@ -44,15 +43,5 @@ public class LabelScribe extends StringPropertyScribe<Label> {
 	@Override
 	protected Label _parseValue(String value) {
 		return new Label(value);
-	}
-
-	@Override
-	protected Label _parseHtml(HCardElement element, ParseContext context) {
-		Label property = new Label(element.value());
-
-		List<String> types = element.types();
-		property.getParameters().putAll(VCardParameters.TYPE, types);
-
-		return property;
 	}
 }

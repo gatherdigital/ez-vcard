@@ -244,32 +244,6 @@ public class BinaryPropertyScribeTest {
 	}
 
 	@Test
-	public void parseHtml_url() {
-		//with type
-		sensei.assertParseHtml("<object type=\"image/gif\" data=\"" + url + "\" />").run(hasUrl(url, ImageType.GIF));
-
-		//without type
-		sensei.assertParseHtml("<object data=\"" + url + "\" />").run(hasUrl(url, ImageType.JPEG));
-		sensei.assertParseHtml("<object data=\"" + urlUnknownExtension + "\" />").run(hasUrl(urlUnknownExtension, null));
-		sensei.assertParseHtml("<object data=\"" + urlWithoutExtension + "\" />").run(hasUrl(urlWithoutExtension, null));
-	}
-
-	@Test
-	public void parseHtml_binary() {
-		//with type (should be ignored)
-		sensei.assertParseHtml("<object type=\"image/png\" data=\"" + dataUri + "\" />").run(hasData(data, ImageType.JPEG));
-
-		//without type
-		sensei.assertParseHtml("<object data=\"" + dataUri + "\" />").run(hasData(data, ImageType.JPEG));
-	}
-
-	@Test
-	public void parseHtml_invalid() {
-		sensei.assertParseHtml("<object type=\"image/gif\" />").cannotParse(2);
-		sensei.assertParseHtml("<div />").cannotParse(1);
-	}
-
-	@Test
 	public void parseJson_url() {
 		//with MEDIATYPE
 		sensei.assertParseJson(url).param("MEDIATYPE", "image/jpeg").run(hasUrl(url, ImageType.JPEG));

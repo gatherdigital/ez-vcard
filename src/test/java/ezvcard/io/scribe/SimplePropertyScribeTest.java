@@ -49,7 +49,6 @@ public class SimplePropertyScribeTest {
 
 	private final String value = "One, two\nthree; four\\.";
 	private final String valueEscaped = "One\\, two\nthree\\; four\\\\.";
-	private final String valueHtml = "One, two three; four\\.";
 
 	private final TestProperty withValue = new TestProperty(value);
 	private final TestProperty empty = new TestProperty(null);
@@ -83,12 +82,6 @@ public class SimplePropertyScribeTest {
 	public void parseXml() {
 		sensei.assertParseXml("<text>" + value + "</text>").run(withValue);
 		sensei.assertParseXml("").cannotParse(0);
-	}
-
-	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<div>" + value + "</div>").run(hasText(valueHtml));
-		sensei.assertParseHtml("<div></div>").run(hasText(""));
 	}
 
 	@Test

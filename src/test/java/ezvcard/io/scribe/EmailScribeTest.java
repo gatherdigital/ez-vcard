@@ -72,41 +72,4 @@ public class EmailScribeTest {
 		Email expected = new Email("johndoe@example.com");
 		sensei.assertParseText("johndoe@example.com").run(expected);
 	}
-
-	@Test
-	public void parseHtml() {
-		Email expected = new Email("johndoe@example.com");
-
-		//@formatter:off
-		sensei.assertParseHtml(
-		"<a href=\"mailto:johndoe@example.com\">Email Me</a>"	
-		).run(expected);
-		
-		sensei.assertParseHtml(
-		"<a href=\"MAILTO:johndoe@example.com\">Email Me</a>"	
-		).run(expected);
-		
-		sensei.assertParseHtml(
-		"<a href=\"http://www.example.com\">johndoe@example.com</a>"	
-		).run(expected);
-		
-		sensei.assertParseHtml(
-		"<div>johndoe@example.com</div>"	
-		).run(expected);
-		//@formatter:on
-	}
-
-	@Test
-	public void parseHtml_types() {
-		Email expected = new Email("johndoe@example.com");
-		expected.getTypes().add(EmailType.HOME);
-
-		//@formatter:off
-		sensei.assertParseHtml(
-		"<a href=\"mailto:johndoe@example.com\">" +
-			"<span class=\"type\">Home</span> Email" +
-		"</a>"	
-		).run(expected);
-		//@formatter:on
-	}
 }

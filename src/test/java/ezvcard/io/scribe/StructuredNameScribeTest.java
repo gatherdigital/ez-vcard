@@ -166,36 +166,6 @@ public class StructuredNameScribeTest {
 	}
 
 	@Test
-	public void parseHtml() {
-		//@formatter:off
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"family-name\">Doe</span>" +
-			"<span class=\"given-name\">Jonathan</span>" +
-			"<span class=\"additional-name\">Joh;nny,</span>" +
-			"<span class=\"additional-name\">John</span>" +
-			"<span class=\"honorific-prefix\">Mr.</span>" +
-			"<span class=\"honorific-suffix\">III</span>" +
-		"</div>"
-		).run(withAllValues);
-
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"given-name\">Jonathan</span>" +
-			"<span class=\"additional-name\">Joh;nny,</span>" +
-			"<span class=\"additional-name\">John</span>" +
-		"</div>"
-		).run(withEmptyValues);
-		
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"given-name\"></span>" +
-		"</div>"
-		).run(empty);
-		//@formatter:on
-	}
-
-	@Test
 	public void parseJson() {
 		JCardValue value = JCardValue.structured("Doe", "Jonathan", Arrays.asList("Joh;nny,", "John"), "Mr.", "III");
 		sensei.assertParseJson(value).run(withAllValues);

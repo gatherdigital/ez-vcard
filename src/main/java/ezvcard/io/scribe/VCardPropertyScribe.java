@@ -17,7 +17,6 @@ import ezvcard.io.CannotParseException;
 import ezvcard.io.EmbeddedVCardException;
 import ezvcard.io.ParseContext;
 import ezvcard.io.SkipMeException;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.json.JsonValue;
 import ezvcard.io.text.WriteContext;
@@ -235,21 +234,6 @@ public abstract class VCardPropertyScribe<T extends VCardProperty> {
 	}
 
 	/**
-	 * Unmarshals the property from an HTML document (hCard).
-	 * @param element the property's HTML element
-	 * @param context the parse context
-	 * @return the unmarshalled property
-	 * @throws CannotParseException if the property value could not be parsed
-	 * @throws SkipMeException if this type should NOT be added to the
-	 * {@link VCard} object
-	 * @throws EmbeddedVCardException if the property value is an embedded vCard
-	 * (i.e. the AGENT property)
-	 */
-	public final T parseHtml(HCardElement element, ParseContext context) {
-		return _parseHtml(element, context);
-	}
-
-	/**
 	 * Unmarshals a property's value from a JSON data stream (jCard).
 	 * @param value the property's JSON value
 	 * @param dataType the data type
@@ -430,33 +414,6 @@ public abstract class VCardPropertyScribe<T extends VCardProperty> {
 		VCardDataType dataType = firstValue.getDataType();
 		String value = VObjectPropertyValues.escape(firstValue.getValue());
 		return _parseText(value, dataType, parameters, context);
-	}
-
-	/**
-	 * <p>
-	 * Unmarshals the property from an hCard (HTML document).
-	 * </p>
-	 * <p>
-	 * This method should be overridden by child classes that wish to support
-	 * hCard. The default implementation of this method will retrieve the HTML
-	 * element's hCard value (as described in {@link HCardElement#value}), and
-	 * pass it into the {@link #_parseText} method.
-	 * </p>
-	 * @param element the property's HTML element
-	 * @param context the parse context
-	 * @return the unmarshalled property object
-	 * @throws CannotParseException if the property value could not be parsed
-	 * @throws SkipMeException if this property should NOT be added to the
-	 * {@link VCard} object
-	 * @throws EmbeddedVCardException if the value of this property is an
-	 * embedded vCard (i.e. the AGENT property)
-	 */
-	protected T _parseHtml(HCardElement element, ParseContext context) {
-		String value = VObjectPropertyValues.escape(element.value());
-		VCardParameters parameters = new VCardParameters();
-		T property = _parseText(value, null, parameters, context);
-		property.setParameters(parameters);
-		return property;
 	}
 
 	/**

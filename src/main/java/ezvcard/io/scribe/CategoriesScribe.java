@@ -1,7 +1,6 @@
 package ezvcard.io.scribe;
 
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.property.Categories;
 
 /*
@@ -36,18 +35,6 @@ import ezvcard.property.Categories;
 public class CategoriesScribe extends ListPropertyScribe<Categories> {
 	public CategoriesScribe() {
 		super(Categories.class, "CATEGORIES");
-	}
-
-	@Override
-	protected Categories _parseHtml(HCardElement element, ParseContext context) {
-		String value = element.attr("rel");
-		if (value.length() == 0) {
-			value = element.value();
-		}
-
-		Categories property = _newInstance();
-		property.getValues().add(value);
-		return property;
 	}
 
 	@Override

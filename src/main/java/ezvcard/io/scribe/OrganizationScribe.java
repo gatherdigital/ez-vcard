@@ -8,7 +8,6 @@ import com.github.mangstadt.vinnie.io.VObjectPropertyValues.StructuredValueItera
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -85,30 +84,6 @@ public class OrganizationScribe extends VCardPropertyScribe<Organization> {
 		}
 
 		throw missingXmlElements(VCardDataType.TEXT);
-	}
-
-	@Override
-	protected Organization _parseHtml(HCardElement element, ParseContext context) {
-		Organization property = new Organization();
-
-		String orgName = element.firstValue("organization-name");
-		if (orgName != null) {
-			property.getValues().add(orgName);
-		}
-
-		String orgUnit = element.firstValue("organization-unit");
-		if (orgUnit != null) {
-			property.getValues().add(orgUnit);
-		}
-
-		if (property.getValues().isEmpty()) {
-			String value = element.value();
-			if (value.length() > 0) {
-				property.getValues().add(value);
-			}
-		}
-
-		return property;
 	}
 
 	@Override

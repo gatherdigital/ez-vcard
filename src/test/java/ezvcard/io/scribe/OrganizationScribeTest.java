@@ -95,43 +95,6 @@ public class OrganizationScribeTest {
 	}
 
 	@Test
-	public void parseHtml() {
-		//@formatter:off
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"organization-name\">one,two;three</span>" +
-			"<span class=\"organization-unit\">four</span>" +
-		"</div>"
-		).run(withMultipleValues);
-
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"organization-name\">one,two;three</span>" +
-		"</div>"
-		).run(withOneValue);
-		
-		Organization withUnit = new Organization(withMultipleValues);
-		withUnit.getValues().remove(0);
-		sensei.assertParseHtml(
-		"<div>" +
-			"<span class=\"organization-unit\">four</span>" +
-		"</div>"
-		).run(withUnit);
-		
-		Organization withTextContent = new Organization();
-		withTextContent.getValues().add("name");
-		sensei.assertParseHtml(
-		"<div>name</div>"
-		).run(withTextContent);
-		
-		sensei.assertParseHtml(
-		"<div>" +
-		"</div>"
-		).run(empty);
-		//@formatter:on
-	}
-
-	@Test
 	public void parseJson() {
 		sensei.assertParseJson("one,two;three").run(withOneValue);
 		sensei.assertParseJson(JCardValue.structured("one,two;three")).run(withOneValue);

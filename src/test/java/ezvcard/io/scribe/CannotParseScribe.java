@@ -4,7 +4,6 @@ import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -66,11 +65,6 @@ public class CannotParseScribe extends VCardPropertyScribe<CannotParseProperty> 
 
 	@Override
 	protected CannotParseProperty _parseXml(XCardElement element, VCardParameters parameters, ParseContext context) {
-		throw new CannotParseException();
-	}
-
-	@Override
-	protected CannotParseProperty _parseHtml(HCardElement element, ParseContext context) {
 		throw new CannotParseException();
 	}
 

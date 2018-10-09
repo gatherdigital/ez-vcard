@@ -52,18 +52,6 @@ public class ImagePropertyScribeTest {
 	private final byte[] data = "data".getBytes();
 	private final String dataUri = new DataUri("image/jpeg", data).toString();
 
-	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<img />").cannotParse(13);
-		sensei.assertParseHtml("<img src=\"\" />").cannotParse(13);
-		sensei.assertParseHtml("<img src=\"" + url + "\" />").run(hasUrl(url, ImageType.JPEG));
-		sensei.assertParseHtml("<img src=\"" + urlWithoutExtension + "\" />").run(hasUrl(urlWithoutExtension, null));
-		sensei.assertParseHtml("<img src=\"" + dataUri + "\" />").run(hasData(data, ImageType.JPEG));
-
-		//call super.parseHtml() if it's not an <img> tag
-		sensei.assertParseHtml("<object type=\"image/gif\" data=\"" + url + "\" />").run(hasUrl(url, ImageType.GIF));
-	}
-
 	private static class ImagePropertyScribeImpl extends ImagePropertyScribe<ImagePropertyImpl> {
 		public ImagePropertyScribeImpl() {
 			super(ImagePropertyImpl.class, "IMAGE");

@@ -81,11 +81,6 @@ public class RawPropertyScribeTest {
 		sensei.assertParseJson(value).dataType(VCardDataType.TEXT).run(has("RAW", "one,two;three\\,four", VCardDataType.TEXT));
 	}
 
-	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<div>one\\,two</div>").run(has("RAW", "one\\,two", null));
-	}
-
 	private Check<RawProperty> has(final String name, final String value, final VCardDataType dataType) {
 		return new Check<RawProperty>() {
 			public void check(RawProperty property) {

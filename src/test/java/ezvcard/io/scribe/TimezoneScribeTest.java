@@ -140,13 +140,6 @@ public class TimezoneScribeTest {
 	}
 
 	@Test
-	public void parseHtml() {
-		sensei.assertParseHtml("<div>" + offsetStrExtended + "</div>").run(withOffset);
-		sensei.assertParseHtml("<div>" + timezoneIdStr + "</div>").run(withTimezoneId);
-		sensei.assertParseHtml("<div></div>").run(empty);
-	}
-
-	@Test
 	public void parseJson() {
 		sensei.assertParseJson(offsetStrExtended).run(withOffset);
 		sensei.assertParseJson(offsetStrExtended).dataType(VCardDataType.UTC_OFFSET).run(withOffset);

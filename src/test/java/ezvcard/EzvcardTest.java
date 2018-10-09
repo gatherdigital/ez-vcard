@@ -221,98 +221,6 @@ public class EzvcardTest {
 	}
 
 	@Test
-	public void parseHtml_first() throws Exception {
-		//@formatter:off
-		String html =
-		"<div class=\"vcard\">" +
-			"<div class=\"fn\">John Doe</div>" +
-		"</div>";
-		//@formatter:on
-
-		List<List<ParseWarning>> warnings = new ArrayList<List<ParseWarning>>();
-
-		VCard vcard = Ezvcard.parseHtml(html).warnings(warnings).first();
-		assertVersion(VCardVersion.V3_0, vcard);
-		assertEquals("John Doe", vcard.getFormattedName().getValue());
-
-		assertEquals(1, warnings.size());
-		assertParseWarnings(warnings.get(0));
-	}
-
-	@Test
-	public void parseHtml_all() throws Exception {
-		//@formatter:off
-		String html =
-		"<html>" +
-			"<div class=\"vcard\">" +
-				"<div class=\"fn\">John Doe</div>" +
-			"</div>" +
-			"<div class=\"vcard\">" +
-				"<div class=\"fn\">Jane Doe</div>" +
-			"</div>" +
-		"</html>";
-		//@formatter:on
-		List<List<ParseWarning>> warnings = new ArrayList<List<ParseWarning>>();
-
-		List<VCard> vcards = Ezvcard.parseHtml(html).warnings(warnings).all();
-		Iterator<VCard> it = vcards.iterator();
-
-		VCard vcard = it.next();
-		assertVersion(VCardVersion.V3_0, vcard);
-		assertEquals("John Doe", vcard.getFormattedName().getValue());
-
-		vcard = it.next();
-		assertVersion(VCardVersion.V3_0, vcard);
-		assertEquals("Jane Doe", vcard.getFormattedName().getValue());
-
-		assertEquals(2, warnings.size());
-		assertParseWarnings(warnings.get(0));
-		assertParseWarnings(warnings.get(1));
-
-		assertFalse(it.hasNext());
-	}
-
-	@Test
-	public void parseHtml_register() throws Exception {
-		//@formatter:off
-		String html =
-		"<div class=\"vcard\">" +
-			"<div class=\"x-lucky-num\">22</div>" +
-		"</div>";
-		//@formatter:on
-
-		VCard vcard = Ezvcard.parseHtml(html).register(new LuckyNumScribe()).first();
-		assertVersion(VCardVersion.V3_0, vcard);
-		List<LuckyNumProperty> ext = vcard.getProperties(LuckyNumProperty.class);
-		assertEquals(1, ext.size());
-		assertEquals(22, ext.get(0).luckyNum);
-	}
-
-	@Test
-	public void parseHtml_pageUrl() throws Exception {
-		//@formatter:off
-		String html =
-		"<div class=\"vcard\">" +
-			"<a href=\"profile.html\" class=\"url fn\">John Doe</a>" +
-		"</div>";
-		//@formatter:on
-
-		//without
-		VCard vcard = Ezvcard.parseHtml(html).first();
-		assertVersion(VCardVersion.V3_0, vcard);
-		assertEquals("John Doe", vcard.getFormattedName().getValue());
-		assertTrue(vcard.getSources().isEmpty());
-		assertEquals("profile.html", vcard.getUrls().get(0).getValue());
-
-		//with
-		vcard = Ezvcard.parseHtml(html).pageUrl("http://www.example.com/index.html").first();
-		assertVersion(VCardVersion.V3_0, vcard);
-		assertEquals("John Doe", vcard.getFormattedName().getValue());
-		assertEquals("http://www.example.com/index.html", vcard.getSources().get(0).getValue());
-		assertEquals("http://www.example.com/profile.html", vcard.getUrls().get(0).getValue());
-	}
-
-	@Test
 	public void parseJson_first() {
 		//@formatter:off
 		String json =
@@ -650,32 +558,6 @@ public class EzvcardTest {
 
 		String actual = Ezvcard.writeXml(vcard).indent(2).go();
 		assertTrue(actual.contains("    <fn>" + NEWLINE + "      <text>John Doe</text>" + NEWLINE + "    </fn>"));
-	}
-
-	@Test
-	public void writeHtml_one() throws Exception {
-		VCard vcard = new VCard();
-		vcard.setFormattedName(new FormattedName("John Doe"));
-
-		String actual = Ezvcard.writeHtml(vcard).go();
-		org.jsoup.nodes.Document document = Jsoup.parse(actual);
-		assertEquals(1, document.select(".vcard").size());
-		assertEquals(1, document.select(".vcard .fn").size());
-	}
-
-	@Test
-	public void writeHtml_multiple() throws Exception {
-		VCard vcard1 = new VCard();
-		vcard1.setFormattedName(new FormattedName("John Doe"));
-		VCard vcard2 = new VCard();
-		vcard2.setFormattedName(new FormattedName("Jane Doe"));
-		VCard vcard3 = new VCard();
-		vcard3.setFormattedName(new FormattedName("Janet Doe"));
-
-		String actual = Ezvcard.writeHtml(vcard1, vcard2, vcard3).go();
-		org.jsoup.nodes.Document document = Jsoup.parse(actual);
-		assertEquals(3, document.select(".vcard").size());
-		assertEquals(3, document.select(".vcard .fn").size());
 	}
 
 	@Test

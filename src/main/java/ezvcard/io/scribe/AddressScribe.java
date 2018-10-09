@@ -13,7 +13,6 @@ import ezvcard.VCard;
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -152,23 +151,6 @@ public class AddressScribe extends VCardPropertyScribe<Address> {
 
 	private List<String> sanitizeXml(XCardElement element, String name) {
 		return element.all(name);
-	}
-
-	@Override
-	protected Address _parseHtml(HCardElement element, ParseContext context) {
-		Address property = new Address();
-		property.getPoBoxes().addAll(element.allValues("post-office-box"));
-		property.getExtendedAddresses().addAll(element.allValues("extended-address"));
-		property.getStreetAddresses().addAll(element.allValues("street-address"));
-		property.getLocalities().addAll(element.allValues("locality"));
-		property.getRegions().addAll(element.allValues("region"));
-		property.getPostalCodes().addAll(element.allValues("postal-code"));
-		property.getCountries().addAll(element.allValues("country-name"));
-
-		List<String> types = element.types();
-		property.getParameters().putAll(VCardParameters.TYPE, types);
-
-		return property;
 	}
 
 	@Override

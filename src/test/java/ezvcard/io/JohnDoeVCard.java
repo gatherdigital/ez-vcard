@@ -78,11 +78,6 @@ public class JohnDoeVCard {
 		System.out.println("Writing " + file.getName() + "...");
 		Ezvcard.writeXml(vcard).indent(2).go(file);
 
-		//write hCard
-		file = new File("john-doe.html");
-		System.out.println("Writing " + file.getName() + "...");
-		Ezvcard.writeHtml(vcard).go(file);
-
 		//write jCard
 		file = new File("john-doe.json");
 		System.out.println("Writing " + file.getName() + "...");

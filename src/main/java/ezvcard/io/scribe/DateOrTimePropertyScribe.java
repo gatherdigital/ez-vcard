@@ -8,7 +8,6 @@ import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -167,21 +166,6 @@ public abstract class DateOrTimePropertyScribe<T extends DateOrTimeProperty> ext
 		}
 
 		throw missingXmlElements(VCardDataType.DATE, VCardDataType.DATE_TIME, VCardDataType.DATE_AND_OR_TIME, VCardDataType.TEXT);
-	}
-
-	@Override
-	protected T _parseHtml(HCardElement element, ParseContext context) {
-		String value = null;
-		if ("time".equals(element.tagName())) {
-			String datetime = element.attr("datetime");
-			if (datetime.length() > 0) {
-				value = datetime;
-			}
-		}
-		if (value == null) {
-			value = element.value();
-		}
-		return parse(value, context);
 	}
 
 	@Override

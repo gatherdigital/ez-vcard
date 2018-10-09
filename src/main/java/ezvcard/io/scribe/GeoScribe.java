@@ -6,7 +6,6 @@ import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -121,35 +120,6 @@ public class GeoScribe extends VCardPropertyScribe<Geo> {
 		}
 
 		throw missingXmlElements(VCardDataType.URI);
-	}
-
-	@Override
-	protected Geo _parseHtml(HCardElement element, ParseContext context) {
-		String latitudeStr = element.firstValue("latitude");
-		if (latitudeStr == null) {
-			throw new CannotParseException(7);
-		}
-
-		Double latitude;
-		try {
-			latitude = Double.parseDouble(latitudeStr);
-		} catch (NumberFormatException e) {
-			throw new CannotParseException(8, latitudeStr);
-		}
-
-		String longitudeStr = element.firstValue("longitude");
-		if (longitudeStr == null) {
-			throw new CannotParseException(9);
-		}
-
-		Double longitude;
-		try {
-			longitude = Double.parseDouble(longitudeStr);
-		} catch (NumberFormatException e) {
-			throw new CannotParseException(10, longitudeStr);
-		}
-
-		return new Geo(latitude, longitude);
 	}
 
 	@Override

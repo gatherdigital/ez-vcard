@@ -5,7 +5,6 @@ import com.github.mangstadt.vinnie.io.VObjectPropertyValues;
 import ezvcard.VCardDataType;
 import ezvcard.VCardVersion;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.io.json.JCardValue;
 import ezvcard.io.text.WriteContext;
 import ezvcard.io.xml.XCardElement;
@@ -81,12 +80,6 @@ public abstract class SimplePropertyScribe<T extends VCardProperty> extends VCar
 		}
 
 		throw super.missingXmlElements(dataType);
-	}
-
-	@Override
-	protected T _parseHtml(HCardElement element, ParseContext context) {
-		String value = element.value();
-		return _parseValue(value);
 	}
 
 	@Override

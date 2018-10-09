@@ -2,7 +2,6 @@ package ezvcard.io.scribe;
 
 import ezvcard.io.CannotParseException;
 import ezvcard.io.ParseContext;
-import ezvcard.io.html.HCardElement;
 import ezvcard.parameter.SoundType;
 import ezvcard.property.Sound;
 import ezvcard.util.DataUri;
@@ -64,44 +63,5 @@ public class SoundScribe extends BinaryPropertyScribe<Sound, SoundType> {
 	@Override
 	protected Sound _newInstance(byte[] data, SoundType contentType) {
 		return new Sound(data, contentType);
-	}
-
-	@Override
-	protected Sound _parseHtml(HCardElement element, ParseContext context) {
-		String elementName = element.tagName();
-		if (!"audio".equals(elementName) && !"source".equals(elementName)) {
-			return super._parseHtml(element, context);
-		}
-
-		if ("audio".equals(elementName)) {
-			//parse its child "<source>" element
-			org.jsoup.nodes.Element source = element.getElement().getElementsByTag("source").first();
-			if (source == null) {
-				throw new CannotParseException(16);
-			}
-
-			element = new HCardElement(source);
-		}
-
-		String src = element.absUrl("src");
-		if (src.length() == 0) {
-			throw new CannotParseException(17);
-		}
-
-		String type = element.attr("type");
-		SoundType mediaType = (type.length() == 0) ? null : _mediaTypeFromMediaTypeParameter(type);
-
-		try {
-			DataUri uri = DataUri.parse(src);
-			mediaType = _mediaTypeFromMediaTypeParameter(uri.getContentType());
-			return new Sound(uri.getData(), mediaType);
-		} catch (IllegalArgumentException e) {
-			//not a data URI
-			if (mediaType == null) {
-				String extension = getFileExtension(src);
-				mediaType = (extension == null) ? null : _mediaTypeFromFileExtension(extension);
-			}
-			return new Sound(src, mediaType);
-		}
 	}
 }
